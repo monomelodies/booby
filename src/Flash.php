@@ -32,8 +32,9 @@ class Flash
 
     public function __toString()
     {
+        $msg = $this->msg;
         unset(self::$store[$this->index]);
-        return $this->msg;
+        return $msg;
     }
 
     public static function me($msg, array $options = [])
