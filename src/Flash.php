@@ -14,9 +14,6 @@ class Flash
     {
         $this->msg = $msg;
         $this->options = $options;
-        if (!isset($_SESSION['Booby']) || !$_SESSION['Booby']) {
-            $_SESSION['Booby'] =& self::$store;
-        }
         $this->index = spl_object_hash($this);
     }
 
@@ -41,6 +38,7 @@ class Flash
 
     public static function me($msg, array $options = [])
     {
+        self::init();
         $msg = new Flash($msg, $options);
         self::$store[spl_object_hash($msg)] = $msg;
         return $msg;
@@ -48,6 +46,7 @@ class Flash
 
     public static function each()
     {
+        self::init();
         foreach (self::$store as $msg) {
             yield $msg;
         }
@@ -55,7 +54,20 @@ class Flash
 
     public static function all()
     {
+        self::init();
         return self::$store;
+    }
+
+    private static function init()
+    {
+        static $inited = false;
+        if (!$inited) {
+            if (!isset($_SESSION['Booby']) || !$_SESSION['Booby']) {
+                $_SESSION['Booby'] = [];
+            }
+            self::$store =& $_SESSION['Booby'];
+            $inited = true;
+        }
     }
 }
 
