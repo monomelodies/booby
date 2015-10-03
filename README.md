@@ -45,7 +45,8 @@ key/value pairs available as options on your message. E.g.:
 
 Booby\Flash::me('This is a warning', ['type' => 'warning']);
 
-echo Booby\Flash::each()->type; // "warning"
+$msg = Booby\Flash::each();
+echo $msg->type; // "warning"
 ```
 
 These options can be anything as long as the key is a valid PHP property name.
