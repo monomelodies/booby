@@ -40,7 +40,7 @@ class Flash
     public static function me($msg, array $options = [])
     {
         self::init();
-        $msg = new Flash($msg, $options);
+        $msg = new static($msg, $options);
         self::$store[spl_object_hash($msg)] = $msg;
         return $msg;
     }
